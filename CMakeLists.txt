@@ -2,15 +2,15 @@ cmake_minimum_required(VERSION 2.8.3)
 project(simple_arm)
 
 ## Add support for C++11, supported in ROS Kinetic and newer
-# add_definitions(-std=c++11)
+add_definitions(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-	std_msgs
-	message_generation
-	controller_manager
+    std_msgs
+    message_generation
+    controller_manager
 )
 
 ## System dependencies are found with CMake's conventions
@@ -193,3 +193,10 @@ catkin_package(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+
+# Add the simple_mover package.
+add_executable(simple_mover src/simple_mover.cpp)
+target_link_libraries(simple_mover ${catkin_LIBRARIES})
+add_dependencies(simple_mover simple_arm_generate_messages_cpp)
