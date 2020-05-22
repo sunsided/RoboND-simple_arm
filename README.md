@@ -57,19 +57,19 @@ When trying to move the arm using the following command (line break required!),
 
 ```bash
 rosservice call /arm_mover/safe_move "joint_1: 1.57
-joint_2: 1.57"
+joint_2: 2.0"
 ```
 
 the ROS server will report an error:
 
 ```
-[ WARN] [1590169890.483779630, 524.840000000]: j2 is out of bounds, valid range (0.00,1.00), clamping to: 1.00
+[ WARN] [1590169890.483779630, 524.840000000]: j2 is out of bounds, valid range (0.00,1.57), clamping to: 1.57
 ```
 
 We can update the joint limits by reaching out to the parameter server …
 
 ```bash
-rosparam set /arm_mover/max_joint_2_angle 1.57
+rosparam set /arm_mover/max_joint_2_angle 2.0
 ```
 
 … after which the `rosservice` call above will succeed as intended.
