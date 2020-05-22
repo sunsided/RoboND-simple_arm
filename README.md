@@ -9,49 +9,70 @@ A mini-project to better explain pub-sub architecture in ROS.
 ## How to Launch the simulation?
 
 #### Create a catkin_ws, feel free to skip if you already have one!
-```sh
-$ cd /home/workspace/
-$ mkdir -p /home/workspace/catkin_ws/src/
-$ cd catkin_ws/src/
-$ catkin_init_workspace
-$ cd ..
+```bash
+cd /home/workspace/
+mkdir -p /home/workspace/catkin_ws/src/
+cd catkin_ws/src/
+catkin_init_workspace
+cd ..
 ```
 
 #### Clone the package in catkin_ws/src/
-```sh
-$ cd /home/workspace/catkin_ws/src/
-$ git clone https://github.com/udacity/RoboND-simple_arm.git simple_arm
+```bash
+cd /home/workspace/catkin_ws/src/
+git clone https://github.com/udacity/RoboND-simple_arm.git simple_arm
 ```
 
 #### Build the `simple_arm` package
-```sh
-$ cd /home/workspace/catkin_ws/
-$ catkin_make
+```bash
+cd /home/workspace/catkin_ws/
+catkin_make
 ```
 
 #### After building the package, source your environment
-```sh
-$ cd /home/workspace/catkin_ws/
-$ source devel/setup.bash
+```bash
+cd /home/workspace/catkin_ws/
+source devel/setup.bash
 ```
 
 #### Make sure to check and install any missing dependencies
-```sh
-$ rosdep install -i simple_arm
+```bash
+rosdep install -i simple_arm
 ```
 
 #### Once the `simple_arm` package has been built, you can launch the simulation environment using
-```sh
-$ roslaunch simple_arm robot_spawn.launch
+```bash
+roslaunch simple_arm robot_spawn.launch
 ```
 
 #### Interact with the arm using the safe_move service
 Open a new terminal and type the following:
-```sh
-$ cd /home/workspace/catkin_ws/
-$ source devel/setup.bash
-$ rosservice call /arm_mover/safe_move "joint_1: 0.0 joint_2: 0.0"
+```bash
+cd /home/workspace/catkin_ws/
+source devel/setup.bash
+rosservice call /arm_mover/safe_move "joint_1: 0.0 joint_2: 0.0"
 ```
+
+When trying to move the arm using the following command (line break required!),
+
+```bash
+rosservice call /arm_mover/safe_move "joint_1: 1.57
+joint_2: 1.57"
+```
+
+the ROS server will report an error:
+
+```
+[ WARN] [1590169890.483779630, 524.840000000]: j2 is out of bounds, valid range (0.00,1.00), clamping to: 1.00
+```
+
+We can update the joint limits by reaching out to the parameter server …
+
+```bash
+rosparam set /arm_mover/max_joint_2_angle 1.57
+```
+
+… after which the `rosservice` call above will succeed as intended.
 
 ## How to view image stream from the camera?
 Camera image stream is published to the following topic:
@@ -60,8 +81,8 @@ Camera image stream is published to the following topic:
 ```
 
 This stream can be viewed by following command in separate terminal:
-```sh
-$ rosrun image_view image_view image:=/rgb_camera/image_raw
+```bash
+rosrun image_view image_view image:=/rgb_camera/image_raw
 ```
 
 
