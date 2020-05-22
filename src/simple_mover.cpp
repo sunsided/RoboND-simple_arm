@@ -1,8 +1,8 @@
-#include "ros/ros.h"
-#include "std_msgs/Float64.h"
+#include <ros/ros.h>
+#include <std_msgs/Float64.h>
 
-int main(int argc, char** argv)
-{
+
+int main(int argc, char** argv) {
     // Initialize the arm_mover node
     ros::init(argc, argv, "arm_mover");
 
@@ -37,7 +37,7 @@ int main(int argc, char** argv)
         joint1_pub.publish(joint1_angle);
         joint2_pub.publish(joint2_angle);
 
-        // Sleep for the time remaining until 10Hz is reached
+        // Sleep for the time remaining until 10 Hz is reached
         loop_rate.sleep();
     }
 

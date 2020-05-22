@@ -1,8 +1,10 @@
-#include "ros/ros.h"
-#include "simple_arm/GoToPosition.h"
+#include <ros/ros.h>
 #include <std_msgs/Float64.h>
 
-// Global joint publisher objects
+// generated from GoToPosition.srv
+#include "simple_arm/GoToPosition.h"
+
+// Global joint publisher variables
 ros::Publisher joint1_pub, joint2_pub;
 
 // This function checks and clamps the joint angles to a safe zone
@@ -43,7 +45,7 @@ std::vector<float> clamp_at_boundaries(float requested_j1, float requested_j2)
 
 // This callback function executes whenever a safe_move service is requested
 bool handle_safe_move_request(simple_arm::GoToPosition::Request& req,
-    simple_arm::GoToPosition::Response& res)
+                              simple_arm::GoToPosition::Response& res)
 {
 
     ROS_INFO("GoToPositionRequest received - j1:%1.2f, j2:%1.2f", (float)req.joint_1, (float)req.joint_2);
